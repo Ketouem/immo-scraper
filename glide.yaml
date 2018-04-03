@@ -1,0 +1,5 @@
+package: github.com/Ketouem/immo-scrapper
+import:
+- package: github.com/gocolly/colly
+- package: github.com/sirupsen/logrus
+  version: ^1.0.5

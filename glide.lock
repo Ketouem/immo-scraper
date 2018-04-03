@@ -1,0 +1,89 @@
+hash: 452f47bea6dff45a5586dafccd4c15e7f214aad39b037b07c56dbd9388373332
+updated: 2018-04-04T01:47:10.086823+02:00
+imports:
+- name: github.com/andybalholm/cascadia
+  version: 901648c87902174f774fac311d7f176f8647bdaa
+- name: github.com/antchfx/htmlquery
+  version: 9f7717ac9bac5f660391c57e3d496b3c7cf9741f
+- name: github.com/antchfx/xmlquery
+  version: f3845cf372319e5428e4c6704089452ddff8ef8b
+- name: github.com/antchfx/xpath
+  version: da6624a57bffc012f598c42f781bd5919fbfadb2
+- name: github.com/gobwas/glob
+  version: f00a7392b43971b2fdb562418faab1f18da2067a
+  subpackages:
+  - compiler
+  - match
+  - syntax
+  - syntax/ast
+  - syntax/lexer
+  - util/runes
+  - util/strings
+- name: github.com/gocolly/colly
+  version: a22e0d396c7abb406fb624397ee3d5f2e55134c0
+  subpackages:
+  - debug
+  - storage
+- name: github.com/golang/protobuf
+  version: e09c5db296004fbe3f74490e84dcd62c3c5ddb1b
+  subpackages:
+  - proto
+- name: github.com/kennygrant/sanitize
+  version: 2e6820834a1f36c626bf19a253b7d3cc060e9b8b
+- name: github.com/PuerkitoBio/goquery
+  version: ea1bc64a63088ac2bbf1a2edcae38413794a7710
+- name: github.com/saintfish/chardet
+  version: 3af4cd4741ca4f3eb0c407c034571a6fb0ea529c
+- name: github.com/sirupsen/logrus
+  version: c155da19408a8799da419ed3eeb0cb5db0ad5dbc
+- name: github.com/temoto/robotstxt
+  version: 9e4646fa705336d5b2fa9dddfafbe0a1a965acd7
+- name: golang.org/x/crypto
+  version: b2aa35443fbc700ab74c586ae79b81c171851023
+  subpackages:
+  - ssh/terminal
+- name: golang.org/x/net
+  version: b68f30494add4df6bd8ef5e82803f308e7f7c59c
+  subpackages:
+  - context
+  - html
+  - html/atom
+  - html/charset
+- name: golang.org/x/sys
+  version: 378d26f46672a356c46195c28f61bdb4c0a781dd
+  subpackages:
+  - unix
+  - windows
+- name: golang.org/x/text
+  version: ece95c760240037f89ebcbdd7155ac8cb52e38fa
+  subpackages:
+  - encoding
+  - encoding/charmap
+  - encoding/htmlindex
+  - encoding/internal
+  - encoding/internal/identifier
+  - encoding/japanese
+  - encoding/korean
+  - encoding/simplifiedchinese
+  - encoding/traditionalchinese
+  - encoding/unicode
+  - internal/language
+  - internal/language/compact
+  - internal/tag
+  - internal/utf8internal
+  - language
+  - runes
+  - transform
+- name: google.golang.org/appengine
+  version: ad39d7fab7c60b2493fdc318c3d2cdb2128f92a4
+  subpackages:
+  - internal
+  - internal/app_identity
+  - internal/base
+  - internal/datastore
+  - internal/log
+  - internal/modules
+  - internal/remote_api
+  - internal/urlfetch
+  - urlfetch
+testImports: []
