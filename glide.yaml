@@ -1,4 +1,4 @@
-package: github.com/Ketouem/immo-scrapper
+package: github.com/Ketouem/immo-scraper
 import:
 - package: github.com/gocolly/colly
 - package: github.com/sirupsen/logrus

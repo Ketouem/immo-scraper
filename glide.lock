@@ -1,5 +1,5 @@
-hash: 452f47bea6dff45a5586dafccd4c15e7f214aad39b037b07c56dbd9388373332
-updated: 2018-04-04T01:47:10.086823+02:00
+hash: c0a861b1c0f32748cd3770102abcd4fa560ea17326f32c41947641b7267d94a0
+updated: 2018-04-04T21:11:31.010641+02:00
 imports:
 - name: github.com/andybalholm/cascadia
   version: 901648c87902174f774fac311d7f176f8647bdaa
@@ -43,19 +43,19 @@ imports:
   subpackages:
   - ssh/terminal
 - name: golang.org/x/net
-  version: b68f30494add4df6bd8ef5e82803f308e7f7c59c
+  version: b3c676e531a6dc479fa1b35ac961c13f5e2b4d2e
   subpackages:
   - context
   - html
   - html/atom
   - html/charset
 - name: golang.org/x/sys
-  version: 378d26f46672a356c46195c28f61bdb4c0a781dd
+  version: fcb792cfc275f85145c640d36af94b591eed4275
   subpackages:
   - unix
   - windows
 - name: golang.org/x/text
-  version: ece95c760240037f89ebcbdd7155ac8cb52e38fa
+  version: 2cb43934f0eece38629746959acc633cba083fe4
   subpackages:
   - encoding
   - encoding/charmap
