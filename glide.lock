@@ -1,5 +1,5 @@
 hash: c0a861b1c0f32748cd3770102abcd4fa560ea17326f32c41947641b7267d94a0
-updated: 2018-04-04T21:11:31.010641+02:00
+updated: 2018-04-05T01:00:48.213576+02:00
 imports:
 - name: github.com/andybalholm/cascadia
   version: 901648c87902174f774fac311d7f176f8647bdaa
@@ -19,6 +19,8 @@ imports:
   - syntax/lexer
   - util/runes
   - util/strings
+- name: github.com/gocarina/gocsv
+  version: a5c9099e2484f1551abb9433885e158610a25f4b
 - name: github.com/gocolly/colly
   version: a22e0d396c7abb406fb624397ee3d5f2e55134c0
   subpackages:
