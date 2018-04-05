@@ -9,13 +9,13 @@ import (
 )
 
 var (
-	leboncoinStartUrl string
+	leboncoinStartURL string
 	parallelism       int
 )
 
 func init() {
 	flag.IntVar(&parallelism, "parallelism", 1, "number of parallel crawlers")
-	flag.StringVar(&leboncoinStartUrl, "leboncoin-start-url", "", "www.leboncoin.fr start url")
+	flag.StringVar(&leboncoinStartURL, "leboncoin-start-url", "", "www.leboncoin.fr start url")
 	flag.Parse()
 
 	formatter := &logrus.TextFormatter{
@@ -23,7 +23,7 @@ func init() {
 	}
 	logrus.SetFormatter(formatter)
 
-	if len(leboncoinStartUrl) == 0 {
+	if len(leboncoinStartURL) == 0 {
 		logrus.Fatal("leboncoin-start-url must be provided and not empty")
 		os.Exit(0)
 	}
@@ -31,9 +31,9 @@ func init() {
 
 func main() {
 	results := make([]Result, 0)
-	if len(leboncoinStartUrl) != 0 {
+	if len(leboncoinStartURL) != 0 {
 		logrus.Info("Fetching data from leboncoin")
-		lbcLinks := gatherLeboncoinLinks(leboncoinStartUrl)
+		lbcLinks := gatherLeboncoinLinks(leboncoinStartURL)
 		results = append(extractLeboncoinResults(lbcLinks))
 	}
 	dumpResultsToCsv(results)

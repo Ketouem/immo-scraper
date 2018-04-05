@@ -5,6 +5,7 @@ import (
 	"time"
 )
 
+// Result represents a parsed real-state ad
 type Result struct {
 	Link           string    `csv:"link"`
 	Source         string    `csv:"source"`
@@ -15,6 +16,7 @@ type Result struct {
 	Rooms          int       `csv:"rooms"`
 }
 
+// Display to screen the content of a Result
 func (r *Result) Display() {
 	fmt.Println("Titre:", r.Title)
 	fmt.Println("Prix:", r.Price)

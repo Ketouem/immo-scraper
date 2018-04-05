@@ -9,6 +9,7 @@ import (
 	"github.com/sirupsen/logrus"
 )
 
+// SOURCE is used to tag the results
 const SOURCE = "leboncoin"
 
 var (
@@ -21,7 +22,7 @@ func init() {
 	c.Limit(&colly.LimitRule{DomainGlob: "*leboncoin.fr*", Parallelism: parallelism})
 }
 
-func gatherLeboncoinLinks(searchUrl string) (links []string) {
+func gatherLeboncoinLinks(searchURL string) (links []string) {
 	logrus.Info("Gathering leboncoin links")
 
 	c.OnHTML("li[itemscope] a", func(e *colly.HTMLElement) {
@@ -33,7 +34,7 @@ func gatherLeboncoinLinks(searchUrl string) (links []string) {
 		c.Visit(e.Request.AbsoluteURL(nextPageLink))
 	})
 
-	c.Visit(searchUrl)
+	c.Visit(searchURL)
 	c.Wait()
 	return
 }
@@ -69,6 +70,6 @@ func extractLeboncoinResults(links []string) (results []Result) {
 	c.Wait()
 	logrus.WithFields(logrus.Fields{
 		"number": len(results),
-	}).Info("Results extracted from links ✅")
+	}).Info("Results extracted from links")
 	return
 }
