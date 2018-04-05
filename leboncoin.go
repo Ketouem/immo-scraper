@@ -3,6 +3,7 @@ package main
 import (
 	"strconv"
 	"strings"
+	"time"
 
 	"github.com/gocolly/colly"
 	"github.com/sirupsen/logrus"
@@ -47,11 +48,17 @@ func extractLeboncoinResults(links []string) (results []Result) {
 		price, _ := strconv.Atoi(strings.Replace(rawPrice, " ", "", -1))
 		title := e.ChildText("div[data-qa-id='adview_title'] div:first-child h3")
 		link := "https://" + e.Request.URL.Host + e.Request.URL.Path
+		rawLivingSpace := e.ChildText("div[data-qa-id='criteria_item_square'] div div:nth-child(2)")
+		livingSpace, _ := strconv.Atoi(rawLivingSpace[:len(rawLivingSpace)-4])
+		rooms, _ := strconv.Atoi(e.ChildText("div[data-qa-id='criteria_item_rooms'] div div:nth-child(2)"))
 		result := Result{
+			link,
 			SOURCE,
+			time.Now().UTC(),
 			title,
 			price,
-			link,
+			livingSpace,
+			rooms,
 		}
 		results = append(results, result)
 	})
