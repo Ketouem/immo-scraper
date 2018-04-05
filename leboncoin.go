@@ -1,20 +1,24 @@
 package main
 
 import (
-  "strconv"
-  "strings"
+	"strconv"
+	"strings"
 
-  "github.com/gocolly/colly"
-  "github.com/sirupsen/logrus"
+	"github.com/gocolly/colly"
+	"github.com/sirupsen/logrus"
 )
 
 const SOURCE = "leboncoin"
 
 var (
-  c *colly.Collector = colly.NewCollector(
-		colly.AllowedDomains("www.leboncoin.fr"),
+	c *colly.Collector = colly.NewCollector(
+		colly.Async(true),
 	)
 )
+
+func init() {
+	c.Limit(&colly.LimitRule{DomainGlob: "*leboncoin.fr*", Parallelism: parallelism})
+}
 
 func gatherLeboncoinLinks(searchUrl string) (links []string) {
 	logrus.Info("Gathering leboncoin links")
@@ -29,6 +33,7 @@ func gatherLeboncoinLinks(searchUrl string) (links []string) {
 	})
 
 	c.Visit(searchUrl)
+	c.Wait()
 	return
 }
 
@@ -43,7 +48,7 @@ func extractLeboncoinResults(links []string) (results []Result) {
 		title := e.ChildText("div[data-qa-id='adview_title'] div:first-child h3")
 		link := "https://" + e.Request.URL.Host + e.Request.URL.Path
 		result := Result{
-      SOURCE,
+			SOURCE,
 			title,
 			price,
 			link,
@@ -54,6 +59,7 @@ func extractLeboncoinResults(links []string) (results []Result) {
 	for _, link := range links {
 		c.Visit(link)
 	}
+	c.Wait()
 	logrus.WithFields(logrus.Fields{
 		"number": len(results),
 	}).Info("Results extracted from links ✅")
