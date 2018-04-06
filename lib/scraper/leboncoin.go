@@ -1,4 +1,4 @@
-package main
+package scraper
 
 import (
 	"strconv"
@@ -18,11 +18,13 @@ var (
 	)
 )
 
-func init() {
+// SetupLeboncoin is used to perform additional tweak (e.g. colly's Collector)
+func SetupLeboncoin(parallelism int) {
 	c.Limit(&colly.LimitRule{DomainGlob: "*leboncoin.fr*", Parallelism: parallelism})
 }
 
-func gatherLeboncoinLinks(searchURL string) (links []string) {
+// GatherLeboncoinLinks returns a slice of ad links given a search URL
+func GatherLeboncoinLinks(searchURL string) (links []string) {
 	logrus.Info("Gathering leboncoin links")
 
 	c.OnHTML("li[itemscope] a", func(e *colly.HTMLElement) {
@@ -39,7 +41,8 @@ func gatherLeboncoinLinks(searchURL string) (links []string) {
 	return
 }
 
-func extractLeboncoinResults(links []string) (results []Result) {
+// ExtractLeboncoinResults parse the pages for each link inside the slice
+func ExtractLeboncoinResults(links []string) (results []Result) {
 	logrus.WithFields(logrus.Fields{
 		"number": len(links),
 	}).Info("Extracting results from links")

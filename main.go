@@ -6,6 +6,8 @@ import (
 
 	"github.com/gocarina/gocsv"
 	"github.com/sirupsen/logrus"
+
+	"github.com/Ketouem/immo-scraper/lib/scraper"
 )
 
 var (
@@ -30,16 +32,17 @@ func init() {
 }
 
 func main() {
-	results := make([]Result, 0)
+	results := make([]scraper.Result, 0)
 	if len(leboncoinStartURL) != 0 {
 		logrus.Info("Fetching data from leboncoin")
-		lbcLinks := gatherLeboncoinLinks(leboncoinStartURL)
-		results = append(extractLeboncoinResults(lbcLinks))
+		scraper.SetupLeboncoin(parallelism)
+		lbcLinks := scraper.GatherLeboncoinLinks(leboncoinStartURL)
+		results = append(scraper.ExtractLeboncoinResults(lbcLinks))
 	}
 	dumpResultsToCsv(results)
 }
 
-func dumpResultsToCsv(results []Result) {
+func dumpResultsToCsv(results []scraper.Result) {
 	resultsFile, err := os.OpenFile("results.csv", os.O_CREATE|os.O_TRUNC|os.O_RDWR, os.ModePerm)
 	if err != nil {
 		panic(err)
