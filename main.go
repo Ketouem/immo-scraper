@@ -12,11 +12,13 @@ import (
 
 var (
 	leboncoinStartURL string
+	pageLimit         int
 	parallelism       int
 )
 
 func init() {
 	flag.IntVar(&parallelism, "parallelism", 1, "number of parallel crawlers")
+	flag.IntVar(&pageLimit, "page-limit", -1, "number of results pages to crawl through")
 	flag.StringVar(&leboncoinStartURL, "leboncoin-start-url", "", "www.leboncoin.fr start url")
 	flag.Parse()
 
@@ -36,7 +38,7 @@ func main() {
 	if len(leboncoinStartURL) != 0 {
 		logrus.Info("Fetching data from leboncoin")
 		scraper.SetupLeboncoin(parallelism)
-		lbcLinks := scraper.GatherLeboncoinLinks(leboncoinStartURL)
+		lbcLinks := scraper.GatherLeboncoinLinks(leboncoinStartURL, 2)
 		results = append(scraper.ExtractLeboncoinResults(lbcLinks))
 	}
 	dumpResultsToCsv(results)

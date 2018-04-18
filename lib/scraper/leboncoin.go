@@ -1,6 +1,7 @@
 package scraper
 
 import (
+	"net/url"
 	"strconv"
 	"strings"
 	"time"
@@ -13,9 +14,7 @@ import (
 const SOURCE = "leboncoin"
 
 var (
-	c *colly.Collector = colly.NewCollector(
-		colly.Async(true),
-	)
+	c = colly.NewCollector(colly.Async(true))
 )
 
 // SetupLeboncoin is used to perform additional tweak (e.g. colly's Collector)
@@ -24,7 +23,7 @@ func SetupLeboncoin(parallelism int) {
 }
 
 // GatherLeboncoinLinks returns a slice of ad links given a search URL
-func GatherLeboncoinLinks(searchURL string) (links []string) {
+func GatherLeboncoinLinks(searchURL string, pageLimit int) (links []string) {
 	logrus.Info("Gathering leboncoin links")
 
 	c.OnHTML("li[itemscope] a", func(e *colly.HTMLElement) {
@@ -32,8 +31,17 @@ func GatherLeboncoinLinks(searchURL string) (links []string) {
 	})
 
 	c.OnHTML("#listingAds div.pagination_links_container", func(e *colly.HTMLElement) {
-		nextPageLink := e.ChildAttr("#next", "href")
-		c.Visit(e.Request.AbsoluteURL(nextPageLink))
+		nextPageURL, _ := url.Parse(e.Request.AbsoluteURL(e.ChildAttr("#next", "href")))
+		nextPageIndex, _ := strconv.Atoi(nextPageURL.Query().Get("o"))
+		if pageLimit != -1 {
+			if nextPageIndex >= pageLimit {
+				logrus.Info("Page limit reached, skipping link.")
+			} else {
+				c.Visit(nextPageURL.String())
+			}
+		} else {
+			c.Visit(nextPageURL.String())
+		}
 	})
 
 	c.Visit(searchURL)
