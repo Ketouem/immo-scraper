@@ -91,3 +91,8 @@ func PutResults(database *dynamodb.DynamoDB, results []scraper.Result) (err erro
 	}
 	return
 }
+
+// FetchNewResults retrieves unnotified results from the database
+// func FetchNewResults(database *dynamodb.DynamoDB) (results []scraper.Result) {
+//
+// }
