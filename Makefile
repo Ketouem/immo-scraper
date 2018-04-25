@@ -18,3 +18,7 @@ run-collect:
 run-notify:
 	docker-compose up -d dynamodb
 	AWS_REGION=${AWS_REGION} go run *.go -mode notify -dynamodb-endpoint-url http://localhost:8000
+
+clean:
+	docker-compose kill dynamodb
+	docker-compose rm -fv dynamodb

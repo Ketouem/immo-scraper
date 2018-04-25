@@ -8,6 +8,7 @@ import (
 	"github.com/aws/aws-sdk-go/aws/session"
 	"github.com/aws/aws-sdk-go/service/dynamodb"
 	"github.com/aws/aws-sdk-go/service/dynamodb/dynamodbattribute"
+	"github.com/aws/aws-sdk-go/service/dynamodb/expression"
 	"github.com/sirupsen/logrus"
 
 	"github.com/Ketouem/immo-scraper/lib/scraper"
@@ -93,6 +94,20 @@ func PutResults(database *dynamodb.DynamoDB, results []scraper.Result) (err erro
 }
 
 // FetchNewResults retrieves unnotified results from the database
-// func FetchNewResults(database *dynamodb.DynamoDB) (results []scraper.Result) {
-//
-// }
+func FetchNewResults(database *dynamodb.DynamoDB) (results []scraper.Result, err error) {
+	notNotifiedFilter := expression.Name("Notified").Equal(expression.Value(false))
+	expr, err := expression.NewBuilder().WithFilter(notNotifiedFilter).Build()
+	params := &dynamodb.ScanInput{
+		FilterExpression:          expr.Filter(),
+		ExpressionAttributeNames:  expr.Names(),
+		ExpressionAttributeValues: expr.Values(),
+		TableName:                 aws.String("Results"),
+	}
+	result, err := database.Scan(params)
+	for _, i := range result.Items {
+		rs := scraper.Result{}
+		err = dynamodbattribute.UnmarshalMap(i, &rs)
+		results = append(results, rs)
+	}
+	return
+}

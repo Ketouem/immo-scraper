@@ -36,11 +36,6 @@ func init() {
 	}
 	logrus.SetFormatter(formatter)
 
-	if len(leboncoinStartURL) == 0 {
-		logrus.Fatal("leboncoin-start-url must be provided and not empty")
-		os.Exit(0)
-	}
-
 	db.Setup(dynamodbEndpointURL)
 	databaseHandler, _ := db.Get()
 	err := db.Provision(databaseHandler)
@@ -74,6 +69,11 @@ func main() {
 }
 
 func collect() {
+	if len(leboncoinStartURL) == 0 {
+		logrus.Fatal("leboncoin-start-url must be provided and not empty")
+		os.Exit(1)
+	}
+
 	results := make([]scraper.Result, 0)
 	if len(leboncoinStartURL) != 0 {
 		logrus.Info("leboncoin : Fetching data")
@@ -106,5 +106,10 @@ func collect() {
 }
 
 func notify() {
-	logrus.Info("Notifying new results")
+	databaseHandler, _ := db.Get()
+	unnotifiedResults, err := db.FetchNewResults(databaseHandler)
+	if err != nil {
+		panic(err)
+	}
+	logrus.WithField("results", len(unnotifiedResults)).Info("Notifying new results")
 }
