@@ -7,7 +7,7 @@ import (
 
 // Result represents a parsed real-state ad
 type Result struct {
-	Link           string    `csv:"link"`
+	Link           string    `csv:"link" json:"link"`
 	Source         string    `csv:"source"`
 	ExtractionDate time.Time `csv:"extraction_date"`
 	Title          string    `csv:"title"`

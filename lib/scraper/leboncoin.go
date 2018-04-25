@@ -24,7 +24,7 @@ func SetupLeboncoin(parallelism int) {
 
 // GatherLeboncoinLinks returns a slice of ad links given a search URL
 func GatherLeboncoinLinks(searchURL string, pageLimit int) (links []string) {
-	logrus.Info("Gathering leboncoin links")
+	logrus.Debug("Gathering leboncoin links")
 
 	c.OnHTML("li[itemscope] a", func(e *colly.HTMLElement) {
 		links = append(links, e.Attr("href"))
@@ -35,7 +35,7 @@ func GatherLeboncoinLinks(searchURL string, pageLimit int) (links []string) {
 		nextPageIndex, _ := strconv.Atoi(nextPageURL.Query().Get("o"))
 		if pageLimit != -1 {
 			if nextPageIndex >= pageLimit {
-				logrus.Info("Page limit reached, skipping link.")
+				logrus.Debug("Page limit reached, skipping link.")
 			} else {
 				c.Visit(nextPageURL.String())
 			}
@@ -53,7 +53,7 @@ func GatherLeboncoinLinks(searchURL string, pageLimit int) (links []string) {
 func ExtractLeboncoinResults(links []string) (results []Result) {
 	logrus.WithFields(logrus.Fields{
 		"number": len(links),
-	}).Info("Extracting results from links")
+	}).Debug("Extracting results from links")
 
 	c.OnHTML("#container", func(e *colly.HTMLElement) {
 		rawPrice := strings.Split(e.ChildText("div[data-qa-id=adview_price]"), "€")[0]
@@ -81,6 +81,6 @@ func ExtractLeboncoinResults(links []string) (results []Result) {
 	c.Wait()
 	logrus.WithFields(logrus.Fields{
 		"number": len(results),
-	}).Info("Results extracted from links")
+	}).Debug("Results extracted from links")
 	return
 }

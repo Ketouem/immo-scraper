@@ -1,5 +1,5 @@
-hash: 8f0399f7215458c1f0251fc116be85dd923bba09df604c2d18e28744d2ede684
-updated: 2018-04-11T23:41:33.076525+02:00
+hash: c4d4e7ea2832eadb8c999db3bdd3d7ef12d6e87e1192bd9fab142ce25eb2c020
+updated: 2018-04-25T11:42:39.358789+02:00
 imports:
 - name: github.com/andybalholm/cascadia
   version: 901648c87902174f774fac311d7f176f8647bdaa
@@ -9,6 +9,8 @@ imports:
   version: f3845cf372319e5428e4c6704089452ddff8ef8b
 - name: github.com/antchfx/xpath
   version: da6624a57bffc012f598c42f781bd5919fbfadb2
+- name: github.com/aws/aws-sdk-go
+  version: 6454c9c7415974700e9d0d7f480edbe669f7b2f8
 - name: github.com/gobwas/glob
   version: f00a7392b43971b2fdb562418faab1f18da2067a
   subpackages:
