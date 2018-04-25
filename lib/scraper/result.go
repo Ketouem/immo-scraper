@@ -14,6 +14,22 @@ type Result struct {
 	Price          int       `csv:"price"`
 	LivingSpace    int       `csv:"living_space"`
 	Rooms          int       `csv:"rooms"`
+	Notified       bool      `csv:"notified" json:"notified"`
+}
+
+// NewResult Result constructor
+func NewResult(link string, source string, title string, price int, livingSpace int, rooms int) (result *Result) {
+	result = &Result{
+		Link:           link,
+		Source:         source,
+		ExtractionDate: time.Now().UTC(),
+		Title:          title,
+		Price:          price,
+		LivingSpace:    livingSpace,
+		Rooms:          rooms,
+		Notified:       false,
+	}
+	return
 }
 
 // Display to screen the content of a Result

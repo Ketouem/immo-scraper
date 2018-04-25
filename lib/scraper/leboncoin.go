@@ -4,7 +4,6 @@ import (
 	"net/url"
 	"strconv"
 	"strings"
-	"time"
 
 	"github.com/gocolly/colly"
 	"github.com/sirupsen/logrus"
@@ -63,16 +62,8 @@ func ExtractLeboncoinResults(links []string) (results []Result) {
 		rawLivingSpace := e.ChildText("div[data-qa-id='criteria_item_square'] div div:nth-child(2)")
 		livingSpace, _ := strconv.Atoi(rawLivingSpace[:len(rawLivingSpace)-4])
 		rooms, _ := strconv.Atoi(e.ChildText("div[data-qa-id='criteria_item_rooms'] div div:nth-child(2)"))
-		result := Result{
-			link,
-			SOURCE,
-			time.Now().UTC(),
-			title,
-			price,
-			livingSpace,
-			rooms,
-		}
-		results = append(results, result)
+		result := NewResult(link, SOURCE, title, price, livingSpace, rooms)
+		results = append(results, *result)
 	})
 
 	for _, link := range links {
