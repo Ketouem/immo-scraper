@@ -10,6 +10,10 @@ import (
 	"github.com/Ketouem/immo-scraper/lib/scraper"
 )
 
+func TestSetupLeboncoin(t *testing.T) {
+	Setup("../../templates")
+}
+
 func TestBuildEmail_nominal(t *testing.T) {
 	results := []scraper.Result{
 		scraper.Result{

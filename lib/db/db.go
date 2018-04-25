@@ -95,8 +95,8 @@ func PutResults(database *dynamodb.DynamoDB, results []scraper.Result) (err erro
 
 // FetchNewResults retrieves unnotified results from the database
 func FetchNewResults(database *dynamodb.DynamoDB) (results []scraper.Result, err error) {
-	notNotifiedFilter := expression.Name("Notified").Equal(expression.Value(false))
-	expr, err := expression.NewBuilder().WithFilter(notNotifiedFilter).Build()
+	notNotifiedFilter := expression.Name("notified").Equal(expression.Value(false))
+	expr, _ := expression.NewBuilder().WithFilter(notNotifiedFilter).Build()
 	params := &dynamodb.ScanInput{
 		FilterExpression:          expr.Filter(),
 		ExpressionAttributeNames:  expr.Names(),

@@ -8,6 +8,7 @@ import (
 	"github.com/sirupsen/logrus"
 
 	"github.com/Ketouem/immo-scraper/lib/db"
+	"github.com/Ketouem/immo-scraper/lib/notifier"
 	"github.com/Ketouem/immo-scraper/lib/scraper"
 )
 
@@ -78,7 +79,7 @@ func collect() {
 	if len(leboncoinStartURL) != 0 {
 		logrus.Info("leboncoin : Fetching data")
 		scraper.SetupLeboncoin(parallelism)
-		lbcLinks := scraper.GatherLeboncoinLinks(leboncoinStartURL, 2)
+		lbcLinks := scraper.GatherLeboncoinLinks(leboncoinStartURL, pageLimit)
 		results = append(scraper.ExtractLeboncoinResults(lbcLinks))
 		logrus.WithField("results", len(results)).Info("leboncoin: Results fetched")
 	}
@@ -106,10 +107,13 @@ func collect() {
 }
 
 func notify() {
+	wd, _ := os.Getwd()
+	notifier.Setup(wd + "/templates")
 	databaseHandler, _ := db.Get()
 	unnotifiedResults, err := db.FetchNewResults(databaseHandler)
 	if err != nil {
 		panic(err)
 	}
 	logrus.WithField("results", len(unnotifiedResults)).Info("Notifying new results")
+	notifier.SendEmail(unnotifiedResults)
 }

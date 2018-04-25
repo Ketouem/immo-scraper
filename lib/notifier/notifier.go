@@ -6,13 +6,17 @@ import (
 	"html/template"
 
 	"github.com/Ketouem/immo-scraper/lib/scraper"
+	"github.com/sirupsen/logrus"
 )
 
-// TemplateFolder : Where the tmpl files are stored
-const TemplateFolder = "./templates"
+var templateFolder string
+
+func Setup(folder string) {
+	templateFolder = folder
+}
 
 func buildEmail(results []scraper.Result, templateName string) (emailContent string, err error) {
-	tmpl, err := template.ParseFiles(TemplateFolder + fmt.Sprintf("/%s.tmpl", templateName))
+	tmpl, err := template.ParseFiles(templateFolder + fmt.Sprintf("/%s.tmpl", templateName))
 	if err != nil {
 		return emailContent, err
 	}
@@ -23,4 +27,12 @@ func buildEmail(results []scraper.Result, templateName string) (emailContent str
 
 	emailContent = buff.String()
 	return emailContent, err
+}
+
+func SendEmail(results []scraper.Result) {
+	email, err := buildEmail(results, "new-results")
+	if err != nil {
+		panic(err)
+	}
+	logrus.Debug("Email content: " + email)
 }
